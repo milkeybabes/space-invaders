@@ -1,0 +1,22 @@
+SPACE INVADERS - OPTIONAL MAME VERIFICATION COMMANDS (Windows CMD)
+
+Normal play (no recording):
+    python play.py
+    python play.py --artwork cabinet --overlay classic
+
+To record a Python AVI + VRAM CRC CSV from frame zero:
+    python play.py --record-avi
+
+From your MAME directory (with invaders ROM installed and the tracer path adjusted):
+    mame invaders -video none -sound none -autoboot_script "FULL_PATH_TO_REPO\docs\verification\trace_mame_vram.lua"
+
+The Lua tracer captures frames 3220 through 3250 by default.
+Change FIRST_FRAME and LAST_FRAME in the script to choose a different interval.
+
+Compare after copying the MAME CSV to the project directory:
+    python docs\verification\compare_vram_crc.py invaders_verify_vram_frames.csv "recordings\SpaceInvaders_YYYYMMDD_HHMMSS.csv"
+
+Replace the date-stamped filename with the CSV created during your Python run.
+Start both systems from equivalent fresh boot states; do not press F8 to start
+recording partway through the Python run for frame-zero comparisons.
+The frame comparison is targeted and does not establish whole-program cycle accuracy.
