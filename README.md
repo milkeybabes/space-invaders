@@ -225,8 +225,11 @@ The optional cabinet graphics originate from arcade-artwork resources; before ma
 
 ## Contributing and sharing
 
-If you find a reproducible difference from the original arcade game, an issue with a modern Python/Pygame version, or a useful documentation improvement, feel free to open a GitHub issue with the steps needed to reproduce it.
+If you find a reproducible difference from the original arcade game, an issue with a modern Python/Pygame version, or a useful documentation improvement, open a GitHub issue with the steps needed to reproduce it.
 
 The aim is to make the original arcade algorithms accessible to enthusiasts, programmers, students and anyone curious about how a landmark game actually worked.
 
 **Enjoy the invasion.** 👾
+** Remember this was a labour of Love from one of the asbolutle classic in arcade history. **
+** Enjoy without paying 10p or quarters. Best regards, Michael J Archer **
+
