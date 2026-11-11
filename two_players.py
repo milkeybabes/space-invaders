@@ -50,6 +50,7 @@ class TwoPlayerController:
         m[0x2000] = 1
         m[0x2002] = m[0x2003] = m[0x2006] = 0
         m[0x2082] = r.alive
+        m[0x206D] = 0  # clear invasion latch for the next player's rack
         m[0x2069] = 0
         m[0x206A] = 0x30
         m[0x2011] = 0  # original $0318

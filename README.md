@@ -25,7 +25,6 @@ Many Space Invaders projects recreate the *appearance* of the original game usin
 - The mystery saucer, its scoring behaviour and the game's attract-mode sequences.
 - The original interrupt-driven ordering and game-state interactions.
 - Original oddities and graphical quirks, deliberately left intact.
-- Sound hardware is not replicated, but uses .WAV recordings for simplicity.
 
 The code is divided into Python modules covering the game objects, interrupts, enemies, player combat, shields, sound and display. **You do not need a ROM image or MAME to run it.**
 
@@ -225,11 +224,23 @@ The optional cabinet graphics originate from arcade-artwork resources; before ma
 
 ## Contributing and sharing
 
-If you find a reproducible difference from the original arcade game, an issue with a modern Python/Pygame version, or a useful documentation improvement, open a GitHub issue with the steps needed to reproduce it.
+If you find a reproducible difference from the original arcade game, an issue with a modern Python/Pygame version, or a useful documentation improvement, feel free to open a GitHub issue with the steps needed to reproduce it.
 
 The aim is to make the original arcade algorithms accessible to enthusiasts, programmers, students and anyone curious about how a landmark game actually worked.
 
 **Enjoy the invasion.** 👾
-** Remember this was a labour of Love from one of the asbolutle classic in arcade history. **
-** Enjoy without paying 10p or quarters. Best regards, Michael J Archer **
 
+
+### v1.0.1 maintenance fix — alien invasion ending
+
+The original ROM's `$016A-$016D` check now follows `$1971` by setting
+`$206D` when an invader crosses the `$28` boundary. The existing player
+explosion sequence then proceeds to **GAME OVER** regardless of remaining
+reserve ships, rather than silently freezing the rack or respawning. In
+2-player mode, the original per-player ending/handoff is preserved; the
+invasion flag is cleared when the next player's rack starts. Ordinary
+shot deaths, wave transitions, scoring, and frame scheduling are unchanged.
+
+To reproduce: start a game, allow the invaders to descend without firing,
+and verify that the player explodes, GAME OVER appears, and the credit
+screen returns. With two players, verify player 2 receives their turn.

@@ -144,7 +144,18 @@ class Rack:
                 # Original $016A comparison with $28. This isn't the
                 # cabinet horizontal playfield edge test.
                 if loc.x < 0x28:
-                    self.is_over = True  # Player death handler not yet ported.
+                    # ROM $016A-$016D -> $1971 -> $16E6: invasion is a
+                    # forced round end, NOT an ordinary life loss/respawn.
+                    self.is_over = True
+                    self.mem[0x206D] = 1  # original 'invaded' RAM byte
+                    if self.lives_enabled and not self.lives.game_over:
+                        # $16EA sets playerAlive=0; reuse the translated
+                        # $0296-$02CF explosion before $166D game-over.
+                        self.mem[0x2015] = 0
+                        self.mem[0x2016] = 5
+                        self.mem[0x2017] = 0x0C
+                        self.mem[0x2010:0x2013] = b'\x00\x00\x00'
+                        self.lives.emit('ALIENS_INVADED', loc.x)
                     return
                 self.mem[0x2004] = loc.row
                 self.mem[0x2000] = 1

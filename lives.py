@@ -194,11 +194,13 @@ class PlayerLives:
         self.emit('PLAYER_EXPLOSION_FINISHED', self.stash)
         # Source $02D7 checks whether the stash has any ships *before*
         # removing a replacement. $02DB->$166D if no ships remain.
-        if self.stash == 0 and self.life_decrement:
+        if m[0x206D] or (self.stash == 0 and self.life_decrement):
             self.game_over = True
             m[0x20E7 if m[0x2067] == 0x21 else 0x20E8] = 0
             # Original $166D draws zero; Stage 8 continues the game-over path.
             self.draw_lives_number(0)
+            if m[0x206D]:
+                self.emit('INVASION_GAME_OVER', self.stash)
             self.game_over_sequence.begin()
             self.emit('GAME_OVER_SEQUENCE', self.deaths)
             return 'GAME_OVER_SEQUENCE'
